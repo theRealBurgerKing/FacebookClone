@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Facebook Clone
 
-## Getting Started
+一个基于 Next.js 和 Firebase 构建的全栈社交媒体应用，模仿 Facebook 的核心功能。
 
-First, run the development server:
+## ✨ 功能特性
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 🔐 **Google OAuth 登录** - 使用 NextAuth.js 实现安全的身份验证
+- 📝 **发布帖子** - 支持文字和图片内容
+- 🖼️ **图片上传** - 集成 Firebase Storage 存储用户上传的图片
+- 🔄 **实时更新** - 使用 react-firebase-hooks 实现帖子的实时同步
+- ⚡ **服务端渲染** - 通过 getServerSideProps 预取数据，提升首屏加载速度
+- 📱 **响应式设计** - 适配桌面端和移动端
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ 技术栈
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 前端框架
+- **Next.js 15.5.2** - React 全栈框架，提供 SSR/SSG、API 路由等功能
+- **React 19.1.0** - 用户界面库
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 样式
+- **Tailwind CSS 4.1.14** - 实用优先的 CSS 框架
+- **Heroicons** - 精美的 SVG 图标库
 
-## Learn More
+### 后端服务
+- **Firebase Firestore** - NoSQL 数据库，存储帖子数据
+- **Firebase Storage** - 云存储服务，存储图片文件
+- **Firebase Authentication** - 与 NextAuth.js 集成
 
-To learn more about Next.js, take a look at the following resources:
+### 身份验证
+- **NextAuth.js** - Next.js 的身份验证解决方案
+- **Google OAuth** - 第三方登录提供商
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 其他
+- **react-firebase-hooks** - Firebase 的 React Hooks 库
