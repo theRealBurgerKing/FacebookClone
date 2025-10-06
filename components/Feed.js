@@ -2,7 +2,7 @@ import React from 'react'
 import Stories from './Stories'
 import InputBox from './InputBox'
 import Posts from './Posts'
-function Feed() {
+function Feed({posts}) {
   return (
     <div>
         <div className="flex-grow 
@@ -13,7 +13,7 @@ function Feed() {
                 {/* input box*/}
                 <InputBox />
                 {/* posts*/}
-                <Posts />
+                <Posts initialPosts={posts} />
             </div>
         </div>
     </div>
