@@ -4,29 +4,68 @@ import { useSession } from 'next-auth/react'
 import { FaceSmileIcon } from "@heroicons/react/24/outline";
 import { CameraIcon, VideoCameraIcon } from "@heroicons/react/24/solid";
 import { useRef } from 'react';
-import { db } from '../firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db, storage } from '../firebase';
+import { collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/firestore';
 import { useState } from 'react';
+import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 function InputBox() {
     const { data: session } = useSession();
     const inputRef = useRef(null);
     const filepickerRef = useRef(null);
     const [imageToPost, setImageToPost] = useState(null);
-    const sendPost = async (e) => {  // 添加 async
+    
+    
+    
+    // 发送帖子函数
+    const sendPost = async (e) => {
         e.preventDefault();
-        if(!inputRef.current.value) return;
         
-        // 使用 v9 语法
-        await addDoc(collection(db, 'posts'), {
-            message: inputRef.current.value,
-            name: session.user.name,
-            //email: session.user.email,
-            image: session.user.image,
-            timestamp: serverTimestamp(),
-        });
+        if (!inputRef.current.value) return;
         
-        inputRef.current.value = '';  // 清空输入框
-    }
+        try {
+            // 1. 创建帖子文档
+            const docRef = await addDoc(collection(db, 'posts'), {
+                message: inputRef.current.value,
+                name: session.user.name,
+                //email: session.user.email,
+                image: session.user.image,
+                timestamp: serverTimestamp(),
+            });
+            
+            // 2. 如果有图片，上传到 Storage
+            if (imageToPost) {
+                // 创建 Storage 引用
+                const storageRef = ref(storage, `posts/${docRef.id}`);
+                
+                // 上传 Base64 图片字符串
+                const uploadTask = await uploadString(
+                    storageRef, 
+                    imageToPost, 
+                    'data_url'
+                );
+                
+                // 清除图片预览
+                removeImage();
+                
+                // 获取下载 URL
+                const downloadURL = await getDownloadURL(storageRef);
+                
+                // 更新文档，添加图片 URL
+                await updateDoc(doc(db, 'posts', docRef.id), {
+                    postImage: downloadURL
+                }, { merge: true });
+            }
+            
+            // 清空输入框
+            inputRef.current.value = '';
+            
+        } catch (error) {
+            console.error(" Failed to send post:", error);
+        }
+    };
+
+
+
     const addImageToPost = (e) => {
         const reader = new FileReader();
         if(e.target.files[0]){

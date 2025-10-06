@@ -17,14 +17,14 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="h-screen overflow-hidden">
       <Head>
         <title>Facebook</title>
       </Head>
 
       <Header />
 
-      <main className="flex">
+      <main className="flex bg-gray-100">
         {/* Sidebar */}
         <Sidebar />
         {/* Feed */}
