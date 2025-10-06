@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Login from "../components/Login";
 import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
+import Widgets from "../components/Widgets";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -32,6 +33,7 @@ export default function Home() {
           <Feed />
         </div>
         {/* Widgets */}
+        <Widgets />
       </main>
     </div>
   );
